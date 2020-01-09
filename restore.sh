@@ -15,19 +15,20 @@ if [ ! -z $S3CMD_CURRENT_VERSION ] && [ ! -z $S3CMD_VERSION ] && [ $S3CMD_CURREN
     set +x
 fi
 
-DUMP_FILE_NAME="$APP-db-`date +%Y-%m-%d-%H-%M`.dump"
-echo "Creating dump: $DUMP_FILE_NAME"
+DUMP_FILE_NAME="^(?!.*$APP).*"
+echo "Downloading the latest dump files: $DUMP_FILE_NAME"
 
-TEMP_FILE=$(mktemp tmp.XXXXXXXXXX)
-S3_FILE="s3://$S3_BUCKET_NAME/$S3_BACKUP_PATH/$NAMESPACE/$DUMP_FILE_NAME"
-pg_dump -C -w --format=c --no-acl --blobs > $TEMP_FILE
+S3_DIR="s3://$S3_BUCKET_NAME/$S3_BACKUP_PATH/$NAMESPACE/"
+s3cmd get $S3_DIR --rexclude=$DUMP_FILE_NAME --recursive --access_key=$S3_ACCESS_KEY_ID --secret_key=$S3_SECRET_ACCESS_KEY --region=$S3_REGION --host=$S3_HOSTNAME
+
+pg_restore -cC -1 --format=c --no-acl -f `$(ls *.dump | tail -n1)`
 
 if [ $? -ne 0 ]; then
-  rm $TEMP_FILE
-  echo "Back up not created, check db connection settings"
+  rm "$APP.dump"
+  echo "Back up not restored, check db connection settings"
   exit 1
 fi
-s3cmd put $TEMP_FILE $S3_FILE --access_key=$S3_ACCESS_KEY_ID --secret_key=$S3_SECRET_ACCESS_KEY --region=$S3_REGION --host=$S3_HOSTNAME
-rm "$TEMP_FILE"
-echo 'Successfully Backed Up'
+
+rm "$APP.dump"
+echo 'Successfully  restored'
 exit 0
