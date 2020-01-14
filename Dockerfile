@@ -29,6 +29,7 @@ ENV S3_ACCESS_KEY_ID '**None**'
 ENV S3_SECRET_ACCESS_KEY '**None**'
 
 COPY backup.sh .
+COPY restore.sh .
 
 ENTRYPOINT [ "/bin/sh" ]
 CMD [ "./backup.sh" ]
