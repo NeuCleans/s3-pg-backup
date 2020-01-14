@@ -31,5 +31,8 @@ ENV S3_SECRET_ACCESS_KEY '**None**'
 COPY backup.sh .
 COPY restore.sh .
 
+RUN chmod a+x ./restore.sh
+RUN chmod a+x ./backup.sh
+
 ENTRYPOINT [ "/bin/sh" ]
 CMD [ "./backup.sh" ]
