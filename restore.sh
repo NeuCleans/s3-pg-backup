@@ -22,7 +22,7 @@ S3_DIR="s3://$S3_BUCKET_NAME/$S3_BACKUP_PATH/$NAMESPACE/"
 s3cmd get $S3_DIR --rexclude=$DUMP_FILE_NAME --recursive --access_key=$S3_ACCESS_KEY_ID --secret_key=$S3_SECRET_ACCESS_KEY --region=$S3_REGION --host=$S3_HOSTNAME
 
 # Restore the most recent backup
-pg_restore -c -1 --format=c --no-acl -f "$(ls *.dump | tail -n1)"
+pg_restore -c -1 --no-acl -f "$(ls *.dump | tail -n1)"
 
 if [ $? -ne 0 ]; then
   rm "*.dump"
