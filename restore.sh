@@ -29,14 +29,14 @@ DUMP_FILE_NAME="$(pwd)/$(ls *.dump | tail -n1)"
 echo "Restoring $DUMP_FILE_NAME"
 
 # Restore the most recent backup
-pg_restore -c -1 --no-acl -f $(ls *.dump | tail -n1)
+pg_restore -c -1 --no-acl -f $DUMP_FILE_NAME
 
 if [ $? -ne 0 ]; then
-  rm "*.dump"
+  rm "$(pwd)/*.dump"
   echo "Back up not restored, check db connection settings"
   exit 1
 fi
 
-rm "*.dump"
+rm "$(pwd)/*.dump"
 echo 'Successfully  restored'
 exit 0
