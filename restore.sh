@@ -29,7 +29,7 @@ DUMP_FILE_NAME="$(pwd)/$(ls *.dump | tail -n1)"
 echo "Restoring $DUMP_FILE_NAME"
 
 # Restore the most recent backup
-pg_restore -c -1 --no-acl -f $DUMP_FILE_NAME
+pg_restore -c --format=c  --if-exists --no-acl -f /scripts/accounts-service-db-2019-11-17-00-00.dump
 
 if [ $? -ne 0 ]; then
   rm "$(pwd)/*.dump"
