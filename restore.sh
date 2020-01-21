@@ -18,7 +18,7 @@ fi
 EXCLUDE_PATTERN="^(?!.*$APP).*"
 echo "Downloading the latest dump files: $EXCLUDE_PATTERN"
 
-S3_DIR="s3://$S3_BUCKET_NAME/$S3_BACKUP_PATH/$NAMESPACE/"
+S3_DIR="s3://$S3_BUCKET_NAME/$S3_BACKUP_PATH/$BASE_PATH/"
 s3cmd get $S3_DIR --rexclude=$EXCLUDE_PATTERN --recursive --access_key=$S3_ACCESS_KEY_ID --secret_key=$S3_SECRET_ACCESS_KEY --region=$S3_REGION --host=$S3_HOSTNAME
 
 echo "Show current dir"
