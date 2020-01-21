@@ -17,7 +17,7 @@ RUN S3CMD_CURRENT_VERSION=`curl -fs https://api.github.com/repos/s3tools/s3cmd/r
 RUN apk add postgresql
 
 ENV PGHOST 'localhost:5432'
-ENV PGDATABASE 'accounts'
+ENV PGDATABASE_PATHE 'accounts'
 ENV PGUSER 'postgres'
 ENV PGPASSWORD ''
 ENV NAMESPACE 'prod'

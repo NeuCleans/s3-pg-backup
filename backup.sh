@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+#!/usr/bin/env BASE_PATHh
 
 echo "Current Version:" $S3CMD_CURRENT_VERSION
 if [ ! -z $S3CMD_VERSION ]; then
