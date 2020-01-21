@@ -1,9 +1,12 @@
-#!/usr/bin/env bash
+#!/usr/bin/env BASE_PATHh
 
 echo "Current Version:" $S3CMD_CURRENT_VERSION
 if [ ! -z $S3CMD_VERSION ]; then
     echo "Wanted version: " $S3CMD_VERSION
 fi
+
+echo "Current Path 1"
+echo $(pwd)
 
 if [ ! -z $S3CMD_CURRENT_VERSION ] && [ ! -z $S3CMD_VERSION ] && [ $S3CMD_CURRENT_VERSION != $S3CMD_VERSION ]; then
     echo "Version differ"
@@ -30,4 +33,8 @@ fi
 s3cmd put $TEMP_FILE $S3_FILE --access_key=$S3_ACCESS_KEY_ID --secret_key=$S3_SECRET_ACCESS_KEY --region=$S3_REGION --host=$S3_HOSTNAME
 rm "$TEMP_FILE"
 echo 'Successfully Backed Up'
+
+echo "Current Path 2"
+echo $(pwd)
+
 exit 0

@@ -16,8 +16,8 @@ RUN S3CMD_CURRENT_VERSION=`curl -fs https://api.github.com/repos/s3tools/s3cmd/r
 
 RUN apk add postgresql
 
-ENV PGHOST 'localhost:32768'
-ENV PGDATABASE 'accounts'
+ENV PGHOST 'localhost:5432'
+ENV PGDATABASE_PATHE 'accounts'
 ENV PGUSER 'postgres'
 ENV PGPASSWORD ''
 ENV NAMESPACE 'prod'
@@ -28,8 +28,13 @@ ENV S3_BACKUP_PATH 'backups'
 ENV S3_ACCESS_KEY_ID '**None**'
 ENV S3_SECRET_ACCESS_KEY '**None**'
 
-COPY backup.sh .
-COPY restore.sh .
+WORKDIR /scripts
+
+COPY backup.sh /scripts/
+COPY restore.sh /scripts/
+
+RUN chmod a+x /scripts/backup.sh
+RUN chmod a+x /scripts/restore.sh
 
 ENTRYPOINT [ "/bin/sh" ]
-CMD [ "./backup.sh" ]
+CMD [ "/scripts/backup.sh" ]
