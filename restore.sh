@@ -25,18 +25,18 @@ echo "Show current dir"
 echo $(pwd)
 
 
-DUMP_FILE_NAME="$(pwd)/$(ls *.dump | tail -n1)"
+DUMP_FILE_NAME="$(pwd)/$(ls *.sql | tail -n1)"
 echo "Restoring $DUMP_FILE_NAME"
 
 # Restore the most recent backup
-pg_restore -c --format=c  --if-exists --no-acl -f "$DUMP_FILE_NAME"
+psql -f "$DUMP_FILE_NAME"
 
 if [ $? -ne 0 ]; then
-  rm "$(pwd)/*.dump"
+  rm "$(pwd)/*.sql"
   echo "Back up not restored, check db connection settings"
   exit 1
 fi
 
-rm "$(pwd)/*.dump"
+rm "$(pwd)/*.sql"
 echo 'Successfully  restored'
 exit 0
